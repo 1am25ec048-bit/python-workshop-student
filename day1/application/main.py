@@ -2,11 +2,13 @@ from student import Student
 from student_manager import StudentManager
 from storage import load_students, save_students
 
-
 manager = StudentManager()
-student = students()
-print("hello")
-# TODO: Load students from students.json
+
+# Load students from students.json
+students = load_students()
+
+for student in students:
+    manager.add_student(student)
 
 
 while True:
@@ -21,33 +23,67 @@ while True:
     choice = input("Enter your choice: ")
 
     if choice == "1":
-        # TODO: Read student details
-        # TODO: Create a Student object
-        # TODO: Add the student to the manager
-        # TODO: Save students
-        pass
+        # Read student details
+        name = input("Enter student name: ")
+        age = int(input("Enter student age: "))
+        marks = float(input("Enter student marks: "))
+
+        # Create Student object
+        student = Student(name, age, marks)
+
+        # Add student
+        manager.add_student(student)
+
+        # Save students
+        save_students(manager.students)
+
+        print("Student added successfully.")
 
     elif choice == "2":
-        # TODO: View students
-        pass
+        # View students
+        students = manager.view_students()
+
+        if students:
+            for student in students:
+                print(student)
+        else:
+            print("No students found.")
 
     elif choice == "3":
-        # TODO: Read a name
-        # TODO: Find the student
-        # TODO: Display the student if found
-        pass
+        # Read a name
+        name = input("Enter student name: ")
+
+        # Find the student
+        student = manager.find_student(name)
+
+        # Display the student if found
+        if student:
+            print(student)
+        else:
+            print("Student not found.")
 
     elif choice == "4":
-        # TODO: Read the student name and new marks
-        # TODO: Update the student
-        # TODO: Save students
-        pass
+        # Read student name and new marks
+        name = input("Enter student name: ")
+        new_marks = float(input("Enter new marks: "))
+
+        # Update student
+        if manager.update_student(name, new_marks):
+            save_students(manager.students)
+            print("Student updated successfully.")
+        else:
+            print("Student not found.")
 
     elif choice == "5":
-        # TODO: Read the student name
-        # TODO: Delete the student
-        # TODO: Save students
-        pass
+        # Read student name
+        name = input("Enter student name: ")
+
+        # Delete student
+        if manager.delete_student(name):
+            save_students(manager.students)
+            print("Student deleted successfully.")
+        else:
+            print("Student not found.")
 
     elif choice == "6":
         print("Exiting application.")
