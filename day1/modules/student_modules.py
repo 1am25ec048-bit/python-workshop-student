@@ -10,6 +10,11 @@ marks_comm = float(input("Enter Communication marks: "))
 # TODO:
 # Import the calculate_percentage function
 # from your module
+percentage = calculate_percentage(
+ marks_python,
+ marks_math,
+ marks_comm
+)
 
 # TODO:
 # Calculate the percentage using the imported function
