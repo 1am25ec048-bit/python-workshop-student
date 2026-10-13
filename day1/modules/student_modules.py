@@ -1,4 +1,4 @@
-from modules.result_calculator import calculate_percentage
+from result_calculator import calculate_percentage
 
 
 student_name = input("Enter student name: ")
