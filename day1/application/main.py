@@ -17,6 +17,7 @@ while True:
     print("6. Exit")
 
     choice = input("Enter your choice: ")
+    print("DEBUG: You entered:", repr(choice))
 
     if choice == "1":
         # Read student details
@@ -43,6 +44,7 @@ while True:
         print("Student added successfully.")
 
     elif choice == "2":
+        print("Opening student list...")
         manager.view_students()
 
     elif choice == "3":
