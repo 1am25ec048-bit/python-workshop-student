@@ -1,10 +1,10 @@
+
 import json
 
 
 def save_students(students, filename):
     """Save students to a JSON file."""
-    
-    # Convert students into dictionaries
+
     data = []
 
     for student in students:
@@ -16,32 +16,37 @@ def save_students(students, filename):
             "communication": student.communication
         })
 
-    # Save the data using json.dump()
-    with open(filename, "w") as file:
+    with open(filename, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4)
 
 
 def load_students(filename, student_class):
     """Load students from a JSON file."""
-    
+
     try:
-        # Open and read the JSON file
-        with open(filename, "r") as file:
+        with open(filename, "r", encoding="utf-8") as file:
             data = json.load(file)
 
-        # Convert dictionaries back into Student objects
+        if not isinstance(data, list):
+            print("Error: Student data must be a JSON list.")
+            return []
+
         students = []
 
         for student_data in data:
-            student = student_class(
-                student_data["name"],
-                student_data["age"],
-                student_data["python"],
-                student_data["mathematics"],
-                student_data["communication"]
-            )
+            try:
+                student = student_class(
+                    student_data["name"],
+                    int(student_data["age"]),
+                    float(student_data["python"]),
+                    float(student_data["mathematics"]),
+                    float(student_data["communication"])
+                )
 
-            students.append(student)
+                students.append(student)
+
+            except (KeyError, TypeError, ValueError) as error:
+                print(f"Skipping invalid student record: {error}")
 
         return students
 
